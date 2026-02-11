@@ -6,6 +6,58 @@
 
 @layer base {
   :root {
+    /* Light Mode (New Default) */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 175 80% 40%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 265 75% 60%;
+    --accent-foreground: 222 47% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 175 80% 40%;
+
+    --radius: 1rem;
+
+    /* Glass Tokens - Light Mode */
+    --glass: 0 0% 100%;
+    --glass-border: 214.3 31.8% 91.4%;
+    --glass-highlight: 175 80% 40%;
+    --glass-accent: 265 75% 60%;
+    --glass-warning: 35 90% 55%;
+    --glass-success: 155 70% 45%;
+    --glass-info: 210 85% 60%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 175 80% 40%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --sidebar-ring: 175 80% 40%;
+  }
+
+  .dark {
+    /* Dark Mode (Previous Default, Tweaked) */
     --background: 225 25% 6%;
     --foreground: 210 40% 96%;
 
@@ -34,9 +86,7 @@
     --input: 225 15% 18%;
     --ring: 175 80% 50%;
 
-    --radius: 1rem;
-
-    /* Custom glassmorphic tokens */
+    /* Glass Tokens - Dark Mode */
     --glass: 225 20% 12%;
     --glass-border: 0 0% 100%;
     --glass-highlight: 175 80% 50%;
@@ -73,45 +123,46 @@
     background: hsla(var(--glass), 0.6);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border: 1px solid hsla(var(--glass-border), 0.08);
+    border: 2px solid hsla(var(--glass-border), 0.2); /* Thicker border */
     box-shadow:
-      0 8px 32px hsla(0, 0%, 0%, 0.3),
-      inset 0 1px 0 hsla(var(--glass-border), 0.05);
+      0 8px 32px hsla(0, 0%, 0%, 0.1),
+      inset 0 1px 0 hsla(var(--glass-border), 0.1);
   }
 
   .glass-panel-hover {
-    @apply glass-panel transition-all duration-500 ease-out;
+    @apply glass-panel transition-all duration-500 ease-out cursor-pointer;
   }
 
   .glass-panel-hover:hover {
-    border-color: hsla(var(--glass-border), 0.15);
+    border-color: hsla(var(--glass-highlight), 0.3);
     box-shadow:
-      0 12px 48px hsla(0, 0%, 0%, 0.4),
-      0 0 0 1px hsla(var(--glass-highlight), 0.1),
-      inset 0 1px 0 hsla(var(--glass-border), 0.1);
-    transform: translateY(-2px);
+      0 16px 48px hsla(0, 0%, 0%, 0.2),
+      0 0 0 2px hsla(var(--glass-highlight), 0.2),
+      inset 0 1px 0 hsla(var(--glass-border), 0.2);
+    transform: translateY(-4px) scale(1.01);
   }
 
   .glass-sidebar {
-    background: hsla(var(--sidebar-background), 0.7);
+    background: hsla(var(--sidebar-background), 0.8);
     backdrop-filter: blur(60px) saturate(200%);
     -webkit-backdrop-filter: blur(60px) saturate(200%);
-    border-right: 1px solid hsla(var(--glass-border), 0.06);
+    border-right: 2px solid hsla(var(--glass-border), 0.1);
   }
 
   .glass-input {
-    @apply rounded-xl px-4 py-2.5 text-sm;
-    background: hsla(var(--glass), 0.4);
+    @apply rounded-xl px-4 py-3 text-sm font-medium;
+    background: hsla(var(--glass), 0.5);
     backdrop-filter: blur(20px);
-    border: 1px solid hsla(var(--glass-border), 0.08);
+    border: 2px solid hsla(var(--glass-border), 0.2);
     color: hsl(var(--foreground));
     transition: all 0.3s ease;
   }
 
   .glass-input:focus {
     outline: none;
-    border-color: hsla(var(--glass-highlight), 0.4);
-    box-shadow: 0 0 20px hsla(var(--glass-highlight), 0.1);
+    border-color: hsla(var(--glass-highlight), 0.6);
+    box-shadow: 0 0 0 4px hsla(var(--glass-highlight), 0.1);
+    background: hsla(var(--glass), 0.8);
   }
 
   .glow-text {
@@ -125,31 +176,15 @@
     background-clip: text;
   }
 
-  .stat-glow-primary {
-    box-shadow: 0 0 40px hsla(var(--glass-highlight), 0.15);
-  }
-
-  .stat-glow-accent {
-    box-shadow: 0 0 40px hsla(var(--glass-accent), 0.15);
-  }
-
-  .stat-glow-warning {
-    box-shadow: 0 0 40px hsla(var(--glass-warning), 0.15);
-  }
-
-  .stat-glow-success {
-    box-shadow: 0 0 40px hsla(var(--glass-success), 0.15);
-  }
-
   .gradient-mesh {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 60% 50% at 10% 90%, hsla(var(--glass-accent), 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 40% at 85% 20%, hsla(var(--glass-highlight), 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse 40% 60% at 50% 50%, hsla(var(--glass-info), 0.03) 0%, transparent 50%);
+      radial-gradient(ellipse 60% 50% at 10% 90%, hsla(var(--glass-accent), 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 20%, hsla(var(--glass-highlight), 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 60% at 50% 50%, hsla(var(--glass-info), 0.05) 0%, transparent 50%);
   }
 
   .pulse-dot {
@@ -158,24 +193,29 @@
 
   .pulse-dot::after {
     content: '';
-    @apply absolute w-2 h-2 rounded-full;
+    @apply absolute w-2.5 h-2.5 rounded-full;
     background: hsl(var(--glass-success));
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
   @keyframes pulse-glow {
     0%, 100% { opacity: 1; box-shadow: 0 0 4px hsla(var(--glass-success), 0.6); }
-    50% { opacity: 0.6; box-shadow: 0 0 12px hsla(var(--glass-success), 0.3); }
+    50% { opacity: 0.6; box-shadow: 0 0 16px hsla(var(--glass-success), 0.4); }
   }
 
   .scrollbar-glass::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
   .scrollbar-glass::-webkit-scrollbar-track {
     background: transparent;
   }
   .scrollbar-glass::-webkit-scrollbar-thumb {
-    background: hsla(var(--glass-border), 0.2);
-    border-radius: 3px;
+    background: hsla(var(--glass-border), 0.3);
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .scrollbar-glass::-webkit-scrollbar-thumb:hover {
+    background-color: hsla(var(--glass-border), 0.5);
   }
 }

@@ -64,8 +64,8 @@ function StatusBadge({ value }: { value: string }) {
   );
 }
 
-const isSelectCol = (col: ColumnConfig) =>
-  col.key === "is_active" || col.key === "is_available" || col.key === "share_enabled" || col.key === "status";
+const isStatusCol = (col: ColumnConfig) =>
+  col.key === "is_active" || col.key === "is_available" || col.key === "share_enabled";
 
 export default function DataTable({ config }: DataTableProps) {
   const {
@@ -276,8 +276,8 @@ export default function DataTable({ config }: DataTableProps) {
                       >
                         {tableCols.map((col) => (
                           <td key={col.key} className="py-3.5 px-4 max-w-[250px] truncate">
-                            {isSelectCol(col) ? (
-                              <StatusBadge value={formatCellValue(row[col.key], col)} />
+                            {isStatusCol(col) ? (
+                              <StatusBadge value={String(row[col.key] ?? "")} />
                             ) : (
                               <span className="text-foreground/90 group-hover:text-foreground transition-colors">
                                 {formatCellValue(row[col.key], col)}

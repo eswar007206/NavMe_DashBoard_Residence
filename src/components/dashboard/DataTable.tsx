@@ -129,8 +129,6 @@ export default function DataTable({ config }: DataTableProps) {
       const val = formData[col.key];
       if (val === "" || val === undefined) {
         if (!col.required) cleaned[col.key] = null;
-      } else if (col.type === "number" && val !== null) {
-        cleaned[col.key] = Number(val);
       } else {
         cleaned[col.key] = val;
       }
@@ -417,12 +415,11 @@ export default function DataTable({ config }: DataTableProps) {
                         </select>
                       ) : (
                         <input
-                          type={col.type === "number" ? "number" : col.type === "date" ? "date" : "text"}
+                          type={col.type === "date" ? "date" : "text"}
                           value={String(formData[col.key] ?? "")}
                           onChange={(e) => setFormData({ ...formData, [col.key]: e.target.value })}
                           placeholder={col.placeholder}
                           required={col.required}
-                          step={col.type === "number" ? "any" : undefined}
                           className="glass-input w-full focus:shadow-[0_0_25px_hsla(175,80%,50%,0.1)]"
                         />
                       )}

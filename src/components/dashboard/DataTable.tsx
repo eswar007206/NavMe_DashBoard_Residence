@@ -415,7 +415,7 @@ export default function DataTable({ config }: DataTableProps) {
                         </select>
                       ) : (
                         <input
-                          type={col.type === "date" ? "date" : "text"}
+                          type={col.type === "date" ? "date" : col.type === "number" ? "number" : "text"}
                           value={String(formData[col.key] ?? "")}
                           onChange={(e) => setFormData({ ...formData, [col.key]: e.target.value })}
                           placeholder={col.placeholder}

@@ -254,6 +254,7 @@ export default function Heatmap() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
         className="glass-panel p-5 mb-6"
+        style={{ background: "hsla(var(--glass), 0.92)", border: "2.5px solid hsla(var(--glass-border), 0.6)" }}
       >
         {/* Preset chips */}
         <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -378,6 +379,7 @@ export default function Heatmap() {
             }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
             className="glass-panel p-5"
+            style={{ background: "hsla(var(--glass), 0.92)", border: "2.5px solid hsla(var(--glass-border), 0.6)" }}
           >
             <stat.icon className="w-5 h-5 text-muted-foreground mb-2" />
             <div className={`text-2xl font-bold ${stat.color} tracking-tight`}>
@@ -399,6 +401,7 @@ export default function Heatmap() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className="glass-panel p-6 mb-6"
+        style={{ background: "hsla(var(--glass), 0.92)", border: "2.5px solid hsla(var(--glass-border), 0.6)" }}
       >
         {/* Map header */}
         <div className="flex items-center justify-between mb-5">
@@ -447,8 +450,8 @@ export default function Heatmap() {
 
         {/* Map container */}
         <div
-          className="relative w-full rounded-xl overflow-hidden border border-border/30"
-          style={{ aspectRatio: "16 / 9", minHeight: 420 }}
+          className="relative w-full rounded-xl overflow-hidden"
+          style={{ aspectRatio: "16 / 9", minHeight: 420, background: "hsla(var(--background), 1)", border: "2px solid hsla(var(--glass-border), 0.5)" }}
         >
           {/* Grid background */}
           <div
@@ -672,6 +675,7 @@ export default function Heatmap() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="glass-panel p-6 mb-6"
+        style={{ background: "hsla(var(--glass), 0.92)", border: "2.5px solid hsla(var(--glass-border), 0.6)" }}
       >
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -690,7 +694,10 @@ export default function Heatmap() {
           </div>
         </div>
 
-        <div className="overflow-x-auto scrollbar-glass -mx-2 px-2">
+        <div
+          className="overflow-x-auto scrollbar-glass rounded-xl p-3"
+          style={{ background: "hsla(var(--background), 1)", border: "2px solid hsla(var(--glass-border), 0.5)" }}
+        >
           <div style={{ minWidth: 500, height: 320 }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
@@ -792,6 +799,7 @@ export default function Heatmap() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.5 }}
         className="glass-panel p-6"
+        style={{ background: "hsla(var(--glass), 0.92)", border: "2.5px solid hsla(var(--glass-border), 0.6)" }}
       >
         <div className="flex items-center gap-3 mb-2">
           <Flame className="w-5 h-5 text-orange-400" />

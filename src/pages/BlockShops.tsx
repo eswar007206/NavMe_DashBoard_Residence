@@ -24,7 +24,7 @@ const cardItem = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -88,6 +88,7 @@ export default function BlockShops() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
         className="glass-panel p-4 mb-6 flex items-center justify-between"
+        style={{ background: "hsla(var(--glass), 0.92)", border: "2.5px solid hsla(var(--glass-border), 0.6)" }}
       >
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
@@ -124,6 +125,7 @@ export default function BlockShops() {
               variants={cardItem}
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
               className="glass-panel p-5 relative overflow-hidden"
+              style={{ background: "hsla(var(--glass), 0.92)", border: "2.5px solid hsla(var(--glass-border), 0.6)" }}
             >
               {/* Subtle gradient overlay based on status */}
               <div

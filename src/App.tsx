@@ -7,6 +7,8 @@ import DashboardLayout from "./pages/DashboardLayout";
 import Overview from "./pages/Overview";
 import TablePage from "./pages/TablePage";
 import NavNodesActivity from "./pages/NavNodesActivity";
+import Heatmap from "./pages/Heatmap";
+import BlockShops from "./pages/BlockShops";
 import NotFound from "./pages/NotFound";
 import { tableConfigs } from "./lib/tableConfig";
 import { ThemeProvider } from "./components/theme-provider";
@@ -24,6 +26,8 @@ const App = () => (
             <Route element={<DashboardLayout />}>
               <Route path="/" element={<Overview />} />
               <Route path="/user-activity" element={<NavNodesActivity />} />
+              <Route path="/heatmap" element={<Heatmap />} />
+              <Route path="/block-shops" element={<BlockShops />} />
               <Route path="/shop-categories" element={<TablePage config={tableConfigs.ar_shop_categories} />} />
               <Route path="/shop-items" element={<TablePage config={tableConfigs.ar_shop_items} />} />
               <Route path="/shop-offers" element={<TablePage config={tableConfigs.ar_shop_offers} />} />

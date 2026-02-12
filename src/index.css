@@ -179,6 +179,11 @@
     background: hsla(var(--glass), 0.8);
   }
 
+  select.glass-input option {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
   .glow-text {
     background: linear-gradient(135deg,
         hsl(var(--glass-highlight)),

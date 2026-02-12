@@ -9,6 +9,8 @@ import {
   Store,
   Users,
   Activity,
+  Flame,
+  ShieldCheck,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -16,6 +18,8 @@ import {
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: Activity, label: "User Activity", path: "/user-activity" },
+  { icon: Flame, label: "Heatmap", path: "/heatmap" },
+  { icon: ShieldCheck, label: "Block/Unblock", path: "/block-shops" },
   { icon: FolderOpen, label: "Shop Categories", path: "/shop-categories" },
   { icon: ShoppingBag, label: "Shop Items", path: "/shop-items" },
   { icon: Tag, label: "Shop Offers", path: "/shop-offers" },

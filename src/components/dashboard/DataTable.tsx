@@ -147,16 +147,16 @@ export default function DataTable({ config }: DataTableProps) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* Toolbar */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="flex items-center justify-between gap-4"
+        initial={{ opacity: 0, y: -16, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4"
       >
-        <div className="glass-input flex items-center gap-2.5 flex-1 max-w-md group focus-within:shadow-[0_0_30px_hsla(221,83%,53%,0.12)]">
-          <Search className="w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+        <div className="glass-input flex items-center gap-3 flex-1 sm:max-w-md rounded-2xl group focus-within:shadow-[0_0_40px_hsla(221,83%,53%,0.15)] focus-within:border-primary/40">
+          <Search className="w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors duration-300" />
           <input
             type="text"
             placeholder={`Search ${config.displayName.toLowerCase()}...`}
@@ -171,42 +171,46 @@ export default function DataTable({ config }: DataTableProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 onClick={() => setSearch("")}
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground p-1 rounded-lg hover:bg-secondary/50 transition-colors"
               >
                 <X className="w-3.5 h-3.5" />
               </motion.button>
             )}
           </AnimatePresence>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 self-end sm:self-auto">
           <motion.button
-            whileHover={{ scale: 1.05, rotate: 90 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 400 }}
+            whileHover={{ scale: 1.08, rotate: 180 }}
+            whileTap={{ scale: 0.92 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
             onClick={() => refetch()}
-            className="h-10 w-10 rounded-xl bg-secondary/50 text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center"
+            className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl glass-panel text-muted-foreground hover:text-foreground hover:shadow-[0_0_24px_hsla(var(--primary),0.15)] flex items-center justify-center border border-border/30"
           >
             <RefreshCw className="w-4 h-4" />
           </motion.button>
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px hsla(221, 83%, 53%, 0.3)" }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400 }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 12px 40px -8px hsl(var(--primary) / 0.45), 0 0 0 1px hsl(var(--primary) / 0.2)",
+            }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
             onClick={openAddForm}
-            className="h-10 px-5 rounded-xl bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold text-sm flex items-center gap-2 shadow-lg shadow-primary/20"
+            className="h-10 sm:h-11 px-4 sm:px-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-semibold text-sm flex items-center gap-2 shadow-xl shadow-primary/30 ring-2 ring-white/10"
           >
             <Plus className="w-4 h-4" />
-            Add New
+            <span className="hidden sm:inline">Add New</span>
+            <span className="sm:hidden">Add</span>
           </motion.button>
         </div>
       </motion.div>
 
       {/* Table */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="glass-panel overflow-hidden"
+        initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+        className="glass-panel overflow-hidden rounded-xl sm:rounded-2xl min-w-0 max-w-full"
       >
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-24 text-muted-foreground gap-3">
@@ -225,24 +229,25 @@ export default function DataTable({ config }: DataTableProps) {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto scrollbar-glass">
+            {/* Desktop table — hidden on small screens */}
+            <div className="hidden sm:block overflow-x-auto scrollbar-glass">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border/30 bg-secondary/10">
+                    <th className="text-left py-3.5 px-4 text-[11px] font-bold text-muted-foreground uppercase tracking-widest w-[100px]">
+                      Actions
+                    </th>
                     {tableCols.map((col) => (
                       <th key={col.key} className="text-left py-3.5 px-4 text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
                         {col.label}
                       </th>
                     ))}
-                    <th className="text-right py-3.5 px-4 text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
-                      Actions
-                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {paged.length === 0 ? (
                     <tr>
-                      <td colSpan={tableCols.length + 1} className="py-20 text-center">
+                      <td colSpan={tableCols.length + 1} className="py-20 text-center" style={{ width: "100%" }}>
                         <motion.div
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
@@ -270,21 +275,10 @@ export default function DataTable({ config }: DataTableProps) {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.35, delay: i * 0.03, ease: [0.22, 1, 0.36, 1] }}
-                        className="border-b border-border/10 hover:bg-primary/[0.03] transition-all duration-300 group"
+                        className="border-b border-border/10 hover:bg-primary/[0.06] transition-all duration-300 group"
                       >
-                        {tableCols.map((col) => (
-                          <td key={col.key} className="py-3.5 px-4 max-w-[250px] truncate">
-                            {isStatusCol(col) ? (
-                              <StatusBadge value={String(row[col.key] ?? "")} />
-                            ) : (
-                              <span className="text-foreground/90 group-hover:text-foreground transition-colors">
-                                {formatCellValue(row[col.key], col)}
-                              </span>
-                            )}
-                          </td>
-                        ))}
-                        <td className="py-3.5 px-4">
-                          <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <td className="py-3.5 px-4 w-[100px] shrink-0">
+                          <div className="flex items-center gap-1 opacity-100 group-hover:opacity-100 transition-all duration-300">
                             <motion.button
                               whileHover={{ scale: 1.15 }}
                               whileTap={{ scale: 0.9 }}
@@ -303,6 +297,17 @@ export default function DataTable({ config }: DataTableProps) {
                             </motion.button>
                           </div>
                         </td>
+                        {tableCols.map((col) => (
+                          <td key={col.key} className="py-3.5 px-4 max-w-[250px] truncate">
+                            {isStatusCol(col) ? (
+                              <StatusBadge value={String(row[col.key] ?? "")} />
+                            ) : (
+                              <span className="text-foreground/90 group-hover:text-foreground transition-colors">
+                                {formatCellValue(row[col.key], col)}
+                              </span>
+                            )}
+                          </td>
+                        ))}
                       </motion.tr>
                     ))
                   )}
@@ -310,8 +315,74 @@ export default function DataTable({ config }: DataTableProps) {
               </table>
             </div>
 
+            {/* Mobile card view — visible only on small screens */}
+            <div className="sm:hidden">
+              {paged.length === 0 ? (
+                <div className="py-16 text-center">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center gap-3 text-muted-foreground"
+                  >
+                    <img src="/favicon.ico" alt="NavMe" className="w-12 h-12 opacity-30" />
+                    <p className="text-sm">{search ? "No results found" : "Nothing here yet"}</p>
+                    {!search && (
+                      <button onClick={openAddForm} className="text-xs text-primary hover:underline">
+                        Tap here to add the first entry
+                      </button>
+                    )}
+                  </motion.div>
+                </div>
+              ) : (
+                <div className="divide-y divide-border/10">
+                  {paged.map((row, i) => (
+                    <motion.div
+                      key={String(row[config.primaryKey]) || i}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: i * 0.03 }}
+                      className="p-4 active:bg-primary/[0.04] transition-colors"
+                    >
+                      <div className="space-y-2">
+                        {tableCols.slice(0, 4).map((col) => (
+                          <div key={col.key} className="flex items-start justify-between gap-3">
+                            <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider shrink-0">
+                              {col.label}
+                            </span>
+                            <span className="text-sm text-foreground text-right truncate max-w-[60%]">
+                              {isStatusCol(col) ? (
+                                <StatusBadge value={String(row[col.key] ?? "")} />
+                              ) : (
+                                formatCellValue(row[col.key], col)
+                              )}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border/10">
+                        <button
+                          onClick={() => openEditForm(row)}
+                          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-medium text-primary bg-primary/10 active:bg-primary/20 transition-colors"
+                        >
+                          <Pencil className="w-3.5 h-3.5" />
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => setDeleteConfirm(row[config.primaryKey])}
+                          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-medium text-destructive bg-destructive/10 active:bg-destructive/20 transition-colors"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          Delete
+                        </button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Pagination */}
-            <div className="flex items-center justify-between px-4 py-3.5 border-t border-border/20">
+            <div className="flex items-center justify-between px-3 sm:px-4 py-3 sm:py-3.5 border-t border-border/20">
               <span className="text-xs text-muted-foreground">
                 {filtered.length === 0 ? "No entries" : `${page * PAGE_SIZE + 1}–${Math.min((page + 1) * PAGE_SIZE, filtered.length)} of ${filtered.length} entries`}
               </span>
@@ -359,9 +430,9 @@ export default function DataTable({ config }: DataTableProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 40 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-panel w-full max-w-lg max-h-[85vh] overflow-y-auto scrollbar-glass shadow-2xl bg-background/80"
+              className="glass-panel w-full max-w-lg max-h-[90vh] overflow-y-auto scrollbar-glass shadow-2xl bg-background/80 mx-2 sm:mx-0"
             >
-              <div className="flex items-center justify-between px-6 py-5 border-b border-border/20">
+              <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-border/20">
                 <div>
                   <h2 className="text-lg font-bold text-foreground">
                     {editingRow ? "Edit Entry" : "Add New Entry"}
@@ -380,7 +451,7 @@ export default function DataTable({ config }: DataTableProps) {
                 </motion.button>
               </div>
 
-              <form onSubmit={handleSubmit} className="p-6 space-y-5">
+              <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-5">
                 {formCols.map((col, i) => {
                   if (!col.editable && editingRow) return null;
                   return (
@@ -474,7 +545,7 @@ export default function DataTable({ config }: DataTableProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.85, y: 30 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-panel p-8 w-full max-w-sm text-center shadow-2xl bg-background/80"
+              className="glass-panel p-6 sm:p-8 w-full max-w-sm text-center shadow-2xl bg-background/80 mx-2 sm:mx-0"
             >
               <motion.div
                 initial={{ scale: 0 }}

@@ -17,7 +17,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -27,11 +27,10 @@ const App = () => (
               <Route path="/" element={<Overview />} />
               <Route path="/user-activity" element={<NavNodesActivity />} />
               <Route path="/heatmap" element={<Heatmap />} />
-              <Route path="/block-shops" element={<BlockShops />} />
-              <Route path="/shop-categories" element={<TablePage config={tableConfigs.ar_shop_categories} />} />
-              <Route path="/shop-items" element={<TablePage config={tableConfigs.ar_shop_items} />} />
-              <Route path="/shop-offers" element={<TablePage config={tableConfigs.ar_shop_offers} />} />
-              <Route path="/shops" element={<TablePage config={tableConfigs.ar_shops} />} />
+              <Route path="/block-rooms" element={<BlockShops />} />
+              <Route path="/room-categories" element={<TablePage config={tableConfigs.ar_room_categories} />} />
+              <Route path="/room-information" element={<TablePage config={tableConfigs.ar_room_information} />} />
+              <Route path="/rooms" element={<TablePage config={tableConfigs.ar_rooms} />} />
               <Route path="/users" element={<TablePage config={tableConfigs.ar_user_presence} />} />
             </Route>
             <Route path="*" element={<NotFound />} />

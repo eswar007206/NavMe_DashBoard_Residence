@@ -18,6 +18,27 @@ const BAR_COLORS = [
   "hsl(15, 80%, 55%)",
 ];
 
+function truncateName(name: string, max = 10): string {
+  if (name.length <= max) return name;
+  return name.slice(0, max) + "...";
+}
+
+const CustomXAxisTick = ({ x, y, payload }: { x?: number; y?: number; payload?: { value: string } }) => {
+  const label = truncateName(payload?.value ?? "", 10);
+  return (
+    <text
+      x={x}
+      y={(y ?? 0) + 12}
+      textAnchor="middle"
+      fill="hsl(var(--muted-foreground))"
+      fontSize={12}
+      fontWeight={600}
+    >
+      {label}
+    </text>
+  );
+};
+
 const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { name: string; points: number; created_by: string } }> }) => {
   if (active && payload?.[0]) {
     const data = payload[0].payload;
@@ -74,7 +95,7 @@ export default function NavNodesActivity() {
   const totalPoints = rawNodes?.length ?? 0;
   const totalUsers = chartData.length;
   const topScore = chartData[0]?.points ?? 0;
-  const chartWidth = Math.max(600, chartData.length * 90);
+  const chartWidth = Math.max(600, chartData.length * 110);
 
   return (
     <motion.div
@@ -89,22 +110,22 @@ export default function NavNodesActivity() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="mb-8"
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ duration: 0.7, type: "spring", bounce: 0.5 }}
-              className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg shadow-primary/25"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl overflow-hidden shadow-lg shadow-primary/25 shrink-0"
             >
               <img src="/favicon.ico" alt="NavMe" className="w-full h-full object-contain" />
             </motion.div>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">
+            <div className="min-w-0">
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight truncate">
                 User Activity
               </h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                See how active each user is based on their navigation activity
+              <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 truncate">
+                Navigation activity per user
               </p>
             </div>
           </div>
@@ -126,7 +147,7 @@ export default function NavNodesActivity() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.15 }}
-        className="grid grid-cols-3 gap-4 mb-6"
+        className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6"
       >
         {[
           { label: "Total Activity Points", desc: "Sum of all navigation actions", value: totalPoints, color: "primary", icon: BarChart3 },
@@ -167,9 +188,9 @@ export default function NavNodesActivity() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="glass-panel p-6"
+        className="glass-panel p-4 sm:p-6 min-w-0 overflow-hidden"
       >
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-4 sm:mb-6">
           <div>
             <h2 className="text-base font-semibold text-foreground">Activity Points per User</h2>
             <p className="text-xs text-muted-foreground mt-0.5">Every navigation action earns 1 point — taller bars mean more active users</p>
@@ -181,19 +202,19 @@ export default function NavNodesActivity() {
         </div>
 
         {isLoading ? (
-          <div className="flex items-center justify-center h-[400px] text-muted-foreground">
+          <div className="flex items-center justify-center h-[250px] sm:h-[400px] text-muted-foreground">
             <Loader2 className="w-6 h-6 animate-spin mr-3" />
             Loading activity data...
           </div>
         ) : chartData.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-[400px] text-muted-foreground">
+          <div className="flex flex-col items-center justify-center h-[250px] sm:h-[400px] text-muted-foreground">
             <img src="/favicon.ico" alt="NavMe" className="w-16 h-16 mb-4 opacity-30" />
             <p className="text-sm font-medium">No activity recorded yet</p>
             <p className="text-xs mt-1">Activity will appear here once users start navigating</p>
           </div>
         ) : (
-          <div className="overflow-x-auto scrollbar-glass -mx-2 px-2">
-            <div style={{ width: chartWidth, minWidth: "100%", height: 400 }}>
+          <div className="max-w-full overflow-x-auto scrollbar-glass -mx-2 px-2">
+            <div style={{ width: chartWidth, minWidth: "100%", height: "min(400px, 55vw)" }} className="min-h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} barCategoryGap="20%" margin={{ left: 10, right: 10, top: 5, bottom: 5 }}>
                   <defs>
@@ -211,10 +232,9 @@ export default function NavNodesActivity() {
                   />
                   <XAxis
                     dataKey="name"
-                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12, fontWeight: 600 }}
+                    tick={<CustomXAxisTick />}
                     axisLine={false}
                     tickLine={false}
-                    dy={8}
                     interval={0}
                   />
                   <YAxis
@@ -251,7 +271,7 @@ export default function NavNodesActivity() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="glass-panel p-6 mt-6"
+          className="glass-panel p-4 sm:p-6 mt-4 sm:mt-6"
         >
           <div className="flex items-center gap-3 mb-2">
             <Trophy className="w-5 h-5 text-amber-400" />
